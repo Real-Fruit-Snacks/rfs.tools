@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en" data-theme="nightshift">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RFS — Real tools. No filler.</title>
+<meta name="description" content="RFS on GitHub: small tools that each do one job. PowerShell, Rust and C#.">
+<link rel="canonical" href="https://rfs.tools/">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0C0D10" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#F6F5F2" media="(prefers-color-scheme: light)">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://rfs.tools/">
+<meta property="og:title" content="RFS — Real tools. No filler.">
+<meta property="og:description" content="Small tools that each do one job. All of them on GitHub.">
+<meta property="og:image" content="https://rfs.tools/assets/og.png">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="640">
+<meta property="og:image:alt" content="RFS: Real tools. No filler.">
+<meta name="twitter:card" content="summary_large_image">
+<script>try{const t=localStorage.getItem('rfs-theme');if(t)document.documentElement.dataset.theme=t;else if(matchMedia('(prefers-color-scheme: light)').matches)document.documentElement.dataset.theme='dayshift'}catch(e){}</script>
+<link rel="preload" href="fonts/IBMPlexMono-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/IBMPlexSans-Bold.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:"IBM Plex Sans";font-weight:400;font-display:swap;src:url("fonts/IBMPlexSans-Regular.woff2") format("woff2")}
+@font-face{font-family:"IBM Plex Sans";font-weight:700;font-display:swap;src:url("fonts/IBMPlexSans-Bold.woff2") format("woff2")}
+@font-face{font-family:"IBM Plex Mono";font-weight:400;font-display:swap;src:url("fonts/IBMPlexMono-Regular.woff2") format("woff2")}
+@font-face{font-family:"IBM Plex Mono";font-weight:600;font-display:swap;src:url("fonts/IBMPlexMono-SemiBold.woff2") format("woff2")}
+/* Tokens mirror rfs-brand/brand/tokens/rfs.css. Change them there first. */
+:root,:root[data-theme="nightshift"]{color-scheme:dark;--bg:#0C0D10;--surface:#13151A;--raised:#1A1D24;--line:#262A33;--text:#E8E6E1;--mute:#8A8F99;--primary:#FF6A3D;--on-primary:#0C0D10;--tile:#1A1D24;--dots:#1E222B;--glow:0 0 24px rgba(255,106,61,.35);--glow-field:rgba(255,106,61,.10);--sans:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace}
+:root[data-theme="dayshift"]{color-scheme:light;--bg:#F6F5F2;--surface:#FFFFFF;--raised:#ECEAE4;--line:#D6D3CB;--text:#1A1B1E;--mute:#6B6F78;--primary:#C43F11;--on-primary:#FFFFFF;--tile:#1A1B1E;--dots:#DDD9D1;--glow:none;--glow-field:transparent}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--bg);height:100%}
+body{min-height:100%;font-family:var(--sans);color:var(--text);background:radial-gradient(70% 90% at 78% 110%,var(--glow-field),transparent 70%),radial-gradient(circle at 1.2px 1.2px,var(--dots) 1.2px,transparent 1.3px) 0 0/26px 26px,var(--bg);line-height:1.6;font-size:15px;-webkit-font-smoothing:antialiased;display:flex;flex-direction:column}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--primary);outline-offset:3px;border-radius:6px}
+main{flex:1;display:flex;align-items:center;justify-content:center;padding:64px 24px}
+.card{width:100%;max-width:520px;text-align:center}
+.tile{width:128px;height:128px;margin:0 auto;display:block}
+.tag{font-size:30px;line-height:1.15;font-weight:700;letter-spacing:-.03em;margin-top:30px}
+.sub{color:var(--mute);font-size:15px;margin:12px auto 0;max-width:38ch}
+.cta{display:inline-flex;align-items:center;gap:10px;margin-top:30px;padding:13px 22px;border-radius:10px;background:var(--primary);color:var(--on-primary);font-family:var(--mono);font-weight:600;font-size:15px;letter-spacing:-.02em;box-shadow:var(--glow);transition:transform .12s,filter .12s}
+.cta:hover{filter:brightness(1.06);transform:translateY(-1px)}
+.cta svg{width:18px;height:18px;fill:currentColor}
+.more{margin-top:26px;font-family:var(--mono);font-size:12.5px;color:var(--mute);display:flex;gap:18px;justify-content:center;flex-wrap:wrap}
+.more a{border-bottom:1px solid var(--line);padding-bottom:1px}
+.more a:hover{color:var(--text);border-color:var(--primary)}
+footer{border-top:1px solid var(--line);padding:16px 24px;font-size:12.5px;color:var(--mute);display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+footer .org{font-family:var(--mono);letter-spacing:.12em;font-size:11px}
+.toggle{width:34px;height:20px;border-radius:10px;background:var(--raised);border:1px solid var(--line);position:relative;cursor:pointer;flex:none}
+.toggle::after{content:"";position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:var(--primary);box-shadow:var(--glow)}
+[data-theme="dayshift"] .toggle::after{left:16px}
+@media (max-width:480px){.tag{font-size:25px}.tile{width:88px;height:88px}main{padding:40px 20px}}
+</style>
+</head>
+<body>
+<main>
+  <div class="card">
+    <svg class="tile" viewBox="0 0 64 64" role="img" aria-label="RFS mark"><rect width="64" height="64" rx="14" fill="var(--tile)"/><text x="32" y="43" text-anchor="middle" font-family="IBM Plex Mono, ui-monospace, monospace" font-weight="600" font-size="28" letter-spacing="-1.5" fill="#fff">RFS</text><rect x="14" y="48" width="36" height="4" rx="2" fill="var(--primary)"/></svg>
+    <h1 class="tag">Real tools. No filler.</h1>
+    <p class="sub">Small tools that each do one job. PowerShell, Rust and C#, open source, issues answered. Everything lives on GitHub.</p>
+    <a class="cta" href="https://github.com/Real-Fruit-Snacks" rel="me"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>github.com/Real-Fruit-Snacks</a>
+    <div class="more">
+      <a href="https://real-fruit-snacks.github.io/">the full list of tools</a>
+      <a href="https://github.com/Real-Fruit-Snacks/rfs-brand/blob/main/BRAND.md">brand guide</a>
+    </div>
+  </div>
+</main>
+<footer>
+  <span class="org">REAL-FRUIT-SNACKS</span>
+  <span>rfs.tools · no tracking, no scripts loaded from elsewhere</span>
+  <button class="toggle" type="button" aria-label="Switch between Nightshift (dark) and Dayshift (light)" title="Nightshift / Dayshift"></button>
+</footer>
+<script>
+const root=document.documentElement,tg=document.querySelector('.toggle');
+const sync=()=>tg.setAttribute('aria-pressed',root.dataset.theme==='dayshift');sync();
+tg.onclick=()=>{root.dataset.theme=root.dataset.theme==='dayshift'?'nightshift':'dayshift';sync();try{localStorage.setItem('rfs-theme',root.dataset.theme)}catch(e){}};
+</script>
+</body>
+</html>
