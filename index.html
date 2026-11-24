@@ -392,7 +392,6 @@ h1 {
   border-radius: 12px;
   background: var(--rfs-surface);
   overflow: hidden;
-  box-shadow: 0 24px 54px -26px rgba(0, 0, 0, 0.62);
 }
 
 .deck-beam {
@@ -511,8 +510,7 @@ h1 {
   position: relative;
   padding: 1rem 1.05rem 0.95rem;
   background:
-    radial-gradient(60% 52% at 15% 18%, color-mix(in oklab, var(--rfs-steel) 22%, transparent), transparent 72%),
-    radial-gradient(58% 52% at 85% 86%, color-mix(in oklab, var(--rfs-mint) 12%, transparent), transparent 72%),
+    linear-gradient(125deg in oklab, color-mix(in oklab, var(--rfs-steel) 20%, transparent) 0%, transparent 50%, color-mix(in oklab, var(--rfs-mint) 12%, transparent) 100%),
     linear-gradient(var(--rfs-grid) 1px, transparent 1px) 0 0 / 20px 20px,
     linear-gradient(90deg, var(--rfs-grid) 1px, transparent 1px) 0 0 / 20px 20px,
     var(--rfs-stage);
@@ -1045,11 +1043,33 @@ footer {
   ::view-transition-new(root) { animation: none; }
 }
 
+@media (prefers-reduced-transparency: reduce) {
+  footer {
+    background: var(--rfs-bg);
+    backdrop-filter: none;
+  }
+}
+
 @media (forced-colors: active) {
   body::before { display: none; }
   .word::after, .deck-beam, .deck-dwell-bar { background: Highlight; }
   .cta { background: Highlight; color: HighlightText; border-color: ButtonBorder; }
   .cta-alt, .deck, .theme, .dmx-ch[aria-selected="true"] { border-color: CanvasText; }
+}
+
+@media print {
+  :root {
+    color-scheme: light;
+    --rfs-bg: #ffffff;
+    --rfs-surface: #ffffff;
+    --rfs-code-bg: #f5f7f9;
+    --rfs-text: #0d1016;
+    --rfs-mute: #474d59;
+    --rfs-line: #cfd5dc;
+    --rfs-line-strong: #6e7682;
+  }
+  body::before { display: none; }
+  body { background: #ffffff !important; color: #0d1016 !important; }
 }
 </style>
 </head>
