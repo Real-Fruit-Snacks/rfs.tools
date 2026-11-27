@@ -266,18 +266,18 @@ main {
 
 .hero {
   width: 100%;
-  max-width: 76rem;
+  max-width: 82rem;
   margin-inline: auto;
   display: grid;
-  gap: clamp(2.25rem, 4vw, 3.5rem);
+  gap: clamp(2rem, 3.5vw, 3.25rem);
   align-items: center;
 }
 
 .hero > * { min-width: 0; }
 
-@media (min-width: 62em) {
+@media (min-width: 64em) {
   .hero {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 40.5rem);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 44.5rem);
   }
 }
 
@@ -384,7 +384,7 @@ h1 {
 .cta:active,
 .cta-alt:active { transform: none; }
 
-/* ---- Interactive Cyclorama Signal Patch Bay + 7-Channel DMX Fader Bank ---- */
+/* ---- Interactive Cyclorama Signal Patch Bay + 17-Channel DMX Cue Matrix ---- */
 .shell { width: 100%; }
 
 .deck {
@@ -707,7 +707,7 @@ h1 {
   color: var(--rfs-beacon-ink);
 }
 
-.conduit-core span {
+.conduit-core #deck-proc-note {
   color: var(--rfs-text);
   font-weight: 400;
 }
@@ -768,28 +768,59 @@ h1 {
   color: var(--rfs-mint);
 }
 
-/* 7-Channel Interactive DMX Fader Bank */
-.dmx-bank {
-  display: grid;
-  grid-template-columns: repeat(7, minmax(0, 1fr));
-  gap: 0.35rem;
-  padding: 0.7rem 0.75rem 0.75rem;
+/* 17-Channel Interactive 3x6 Horizontal DMX Cue Matrix */
+.dmx-bank-wrap {
+  container-type: inline-size;
   background: var(--rfs-surface);
   border-top: 1px solid var(--rfs-line);
+  padding: 0.65rem 0.7rem 0.7rem;
+}
+
+.dmx-bank {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.34rem;
+}
+
+@container (min-width: 37.5rem) {
+  .dmx-bank {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
 .dmx-ch {
+  --ch-bar: var(--ch-bar-dark);
+  --track-w: 52px;
+  position: relative;
   appearance: none;
-  display: grid;
-  justify-items: center;
-  gap: 0.32rem;
-  padding: 0.42rem 0.22rem 0.45rem;
-  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 0.38rem;
+  min-width: 0;
+  min-block-size: 2rem;
+  padding: 0.28rem 0.45rem 0.28rem 0.52rem;
+  border-radius: 5px;
   border: 1px solid var(--rfs-line);
   background: var(--rfs-code-bg);
   color: var(--rfs-mute);
+  text-align: left;
   cursor: pointer;
-  transition: border-color var(--dur-fast) var(--ease), background-color var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
+  overflow: hidden;
+  transition: border-color var(--dur-fast) var(--ease), background-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+}
+
+:root:has(> head > meta[name="color-scheme"][content="light"]) .dmx-ch {
+  --ch-bar: var(--ch-bar-light);
+}
+
+.dmx-ch::before {
+  content: "";
+  position: absolute;
+  inset-block: 4px;
+  inset-inline-start: 1px;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--ch-bar);
 }
 
 @media (hover: hover) {
@@ -801,79 +832,26 @@ h1 {
 
 .dmx-ch[aria-selected="true"] {
   border-color: var(--rfs-beacon-ink);
-  background: color-mix(in oklab, var(--rfs-beacon) 12%, var(--rfs-code-bg));
+  background:
+    linear-gradient(90deg var(--in-oklab), color-mix(in oklab, var(--ch-bar) 18%, var(--rfs-surface)) 0%, var(--rfs-surface) 100%);
   color: var(--rfs-text);
 }
 
-.dmx-led {
-  width: 68%;
-  height: 2.5px;
-  border-radius: 2px;
-  background: var(--rfs-line-strong);
-  opacity: 0.45;
-  transition: background-color var(--dur-fast) var(--ease), opacity var(--dur-fast) var(--ease);
-}
-
-.dmx-ch[aria-selected="true"] .dmx-led {
-  background: var(--rfs-beacon);
-  opacity: 1;
-}
-
-.dmx-well {
-  position: relative;
-  width: 24px;
-  height: 44px;
-  border-radius: 4px;
-  border: 1px solid var(--rfs-line);
-  background: var(--ch-wash, #0c1620);
-  display: grid;
-  place-items: center;
-  overflow: hidden;
-}
-
-.dmx-well::before {
+/* Non-color selected indicator (WCAG 1.4.1 & forced-colors safe) */
+.dmx-ch[aria-selected="true"]::after {
   content: "";
   position: absolute;
-  inset-block: 6px;
-  width: 2px;
-  border-radius: 1px;
-  background: rgba(255, 255, 255, 0.22);
-}
-
-.dmx-cap {
-  position: relative;
-  z-index: 1;
-  width: 18px;
-  height: 6px;
-  border-radius: 1.5px;
-  background: #f4f5f8;
-  border: 1px solid #050507;
-  transform: translateY(10px);
-  transition: transform 340ms var(--ease);
-}
-
-.dmx-cap::after {
-  content: "";
-  position: absolute;
-  inset-inline: 2px;
-  top: 50%;
-  height: 1.5px;
-  background: #62646d;
-  transform: translateY(-50%);
-  transition: background-color var(--dur-fast) var(--ease);
-}
-
-.dmx-ch[aria-selected="true"] .dmx-cap {
-  transform: translateY(-11px);
-}
-
-.dmx-ch[aria-selected="true"] .dmx-cap::after {
-  background: var(--rfs-beacon);
+  inset-inline: 0;
+  inset-block-end: 0;
+  border-block-end: 2px solid var(--rfs-beacon);
+  pointer-events: none;
 }
 
 .dmx-num {
-  font: 700 0.6rem/1 var(--font-mono);
-  color: var(--rfs-steel-ink);
+  flex: none;
+  font: 700 0.62rem/1 var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  color: var(--rfs-mute);
 }
 
 .dmx-ch[aria-selected="true"] .dmx-num {
@@ -881,12 +859,135 @@ h1 {
 }
 
 .dmx-slug {
-  font: 500 0.56rem/1.15 var(--font-mono);
-  letter-spacing: -0.025em;
-  text-align: center;
+  flex: 1;
+  min-width: 0;
+  font: 600 0.7rem/1.15 var(--font-sans);
+  letter-spacing: -0.01em;
   white-space: nowrap;
-  color: inherit;
-  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--rfs-text);
+  opacity: 0.86;
+}
+
+.dmx-ch[aria-selected="true"] .dmx-slug {
+  opacity: 1;
+}
+
+.dmx-track {
+  position: relative;
+  flex: none;
+  width: var(--track-w);
+  height: 4px;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.11);
+}
+
+:root:has(> head > meta[name="color-scheme"][content="light"]) .dmx-track {
+  background: rgba(13, 16, 22, 0.13);
+}
+
+.dmx-fill-clip {
+  position: absolute;
+  inset: 0;
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.dmx-fill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--ch-bar);
+  transform: translateX(calc((var(--rest, 0.25) - 1) * 100%));
+  transition: transform 340ms var(--ease);
+}
+
+.dmx-ch[aria-selected="true"] .dmx-fill {
+  transform: translateX(-14%);
+}
+
+.dmx-cap {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 7px;
+  height: 13px;
+  margin-left: -3.5px;
+  border-radius: 1.5px;
+  background: #ffffff;
+  border: 1px solid #050507;
+  transform: translate(calc(var(--rest, 0.25) * var(--track-w)), -50%);
+  transition: transform 340ms var(--ease);
+}
+
+:root:has(> head > meta[name="color-scheme"][content="light"]) .dmx-cap {
+  border-color: #2f3744;
+}
+
+.dmx-cap::after {
+  content: "";
+  position: absolute;
+  inset-block: 2px;
+  left: 50%;
+  width: 1.5px;
+  background: #62646d;
+  transform: translateX(-50%);
+  transition: background-color var(--dur-fast) var(--ease);
+}
+
+.dmx-ch[aria-selected="true"] .dmx-cap {
+  transform: translate(calc(0.86 * var(--track-w)), -50%);
+}
+
+.dmx-ch[aria-selected="true"] .dmx-cap::after {
+  background: var(--rfs-beacon);
+}
+
+.dmx-summary {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem;
+  min-width: 0;
+  min-block-size: 2rem;
+  padding: 0.28rem 0.55rem;
+  border-radius: 5px;
+  border: 1px solid var(--rfs-line-strong);
+  background: var(--rfs-code-bg);
+  font: 600 0.6rem/1 var(--font-mono);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  overflow: hidden;
+}
+
+.dmx-summary::before {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  inset-block-start: 0;
+  height: 2px;
+  background: var(--horizon-rule);
+}
+
+.dmx-summary-lx {
+  color: var(--rfs-steel-ink);
+}
+
+.dmx-summary-lx .day { display: none; }
+:root:has(> head > meta[name="color-scheme"][content="light"]) .dmx-summary-lx .night { display: none; }
+:root:has(> head > meta[name="color-scheme"][content="light"]) .dmx-summary-lx .day { display: inline; }
+
+.dmx-summary-meta {
+  color: var(--rfs-mute);
+  white-space: nowrap;
+}
+
+@container (max-width: 28rem) {
+  .dmx-track { display: none; }
+  .dmx-ch { min-block-size: 2.35rem; padding-inline: 0.52rem 0.45rem; }
+  .dmx-summary { min-block-size: 2.35rem; }
 }
 
 @media (max-width: 42em) {
@@ -898,14 +999,7 @@ h1 {
   .bar-meta-scope { display: none; }
   .deck-btn { padding: 0.2rem 0.42rem; }
   .deck-stage { padding: 0.85rem 0.85rem 0.8rem; }
-  .dmx-bank {
-    grid-template-columns: repeat(auto-fit, minmax(5.25rem, 1fr));
-    padding: 0.6rem 0.65rem 0.65rem;
-  }
-  .dmx-slug { font-size: 0.6rem; }
-  .dmx-well { height: 34px; }
-  .dmx-ch[aria-selected="true"] .dmx-cap { transform: translateY(-7px); }
-  .dmx-cap { transform: translateY(7px); }
+  .dmx-bank-wrap { padding: 0.55rem 0.6rem 0.6rem; }
   .more-sep { display: none; }
 }
 
@@ -1039,7 +1133,7 @@ footer {
 
 @media (prefers-reduced-motion: reduce) {
   .word::after, .bay-beam.is-sweeping, .deck-dwell-bar.is-running { animation: none; }
-  .dmx-cap, .cta, .cta-alt { transition: none; }
+  .dmx-cap, .dmx-fill, .cta, .cta-alt { transition: none; }
   ::view-transition-new(root) { animation: none; }
 }
 
@@ -1091,13 +1185,13 @@ footer {
     </div>
 
     <div class="shell">
-      <!-- Interactive 7-channel Cyclorama Signal Patch Bay + DMX Fader Bank -->
+      <!-- Interactive 17-channel Cyclorama Signal Patch Bay + 3x6 DMX Cue Matrix -->
       <section class="deck" id="rfs-deck" aria-label="Interactive Real-Fruit-Snacks tool patch bay">
         <div class="deck-beam" aria-hidden="true"></div>
         <div class="deck-head">
           <div class="deck-head-left">
             <span class="bar-tok">[patch bay]</span>
-            <span class="bar-meta"><span id="deck-ch-meta">CH 01 / 07</span><span class="bar-meta-scope"> · LOCAL</span></span>
+            <span class="bar-meta"><span id="deck-ch-meta">CH 01 / 17</span><span class="bar-meta-scope"> · LOCAL</span></span>
           </div>
           <div class="deck-ctrl">
             <button type="button" class="deck-btn" id="deck-prev" aria-label="Previous tool channel">&lt;</button>
@@ -1107,7 +1201,7 @@ footer {
         </div>
         <div class="deck-dwell" aria-hidden="true"><div class="deck-dwell-bar is-running" id="deck-dwell-bar"></div></div>
 
-        <div class="deck-stage" role="tabpanel" id="deck-panel" aria-live="polite">
+        <div class="deck-stage" role="tabpanel" id="deck-panel" aria-labelledby="ch-tab-0" aria-live="polite">
           <div>
             <div class="deck-tool-top">
               <h2 class="deck-tool-name" id="deck-name">SCREEN-MARK</h2>
@@ -1129,7 +1223,7 @@ footer {
 
             <div class="deck-conduit">
               <span class="conduit-rail" aria-hidden="true"></span>
-              <span class="conduit-core" id="deck-proc">[screen-mark] <span>local binary</span></span>
+              <span class="conduit-core" id="deck-proc"><span id="deck-proc-repo">[screen-mark]</span> <span id="deck-proc-note">local binary</span></span>
               <span class="conduit-rail" aria-hidden="true"></span>
             </div>
 
@@ -1151,49 +1245,81 @@ footer {
           </div>
         </div>
 
-        <div class="dmx-bank" role="tablist" aria-label="Select flagship RFS tool">
-          <button type="button" class="dmx-ch" role="tab" data-ch="0" aria-selected="true" title="screen-mark (Rust)">
-            <span class="dmx-led" aria-hidden="true"></span>
-            <span class="dmx-well" style="--ch-wash:linear-gradient(180deg,#09121a,#18496b)" aria-hidden="true"><span class="dmx-cap"></span></span>
-            <span class="dmx-num">01</span>
-            <span class="dmx-slug">screen-mark</span>
-          </button>
-          <button type="button" class="dmx-ch" role="tab" data-ch="1" aria-selected="false" tabindex="-1" title="port-sync (Rust)">
-            <span class="dmx-led" aria-hidden="true"></span>
-            <span class="dmx-well" style="--ch-wash:linear-gradient(180deg,#0b1722,#1f547a)" aria-hidden="true"><span class="dmx-cap"></span></span>
-            <span class="dmx-num">02</span>
-            <span class="dmx-slug">port-sync</span>
-          </button>
-          <button type="button" class="dmx-ch" role="tab" data-ch="2" aria-selected="false" tabindex="-1" title="carify (sh / PowerShell)">
-            <span class="dmx-led" aria-hidden="true"></span>
-            <span class="dmx-well" style="--ch-wash:linear-gradient(180deg,#12293d,#20557b 55%,#b84b18)" aria-hidden="true"><span class="dmx-cap"></span></span>
-            <span class="dmx-num">03</span>
-            <span class="dmx-slug">carify</span>
-          </button>
-          <button type="button" class="dmx-ch" role="tab" data-ch="3" aria-selected="false" tabindex="-1" title="certapi (C#)">
-            <span class="dmx-led" aria-hidden="true"></span>
-            <span class="dmx-well" style="--ch-wash:linear-gradient(180deg,#132b3e,#1f547a 42%,#f06e2b)" aria-hidden="true"><span class="dmx-cap"></span></span>
-            <span class="dmx-num">04</span>
-            <span class="dmx-slug">certapi</span>
-          </button>
-          <button type="button" class="dmx-ch" role="tab" data-ch="4" aria-selected="false" tabindex="-1" title="identity-gen (HTML)">
-            <span class="dmx-led" aria-hidden="true"></span>
-            <span class="dmx-well" style="--ch-wash:linear-gradient(180deg,#1a100c,#9b3e12 58%,#f06e2b)" aria-hidden="true"><span class="dmx-cap"></span></span>
-            <span class="dmx-num">05</span>
-            <span class="dmx-slug">identity-gen</span>
-          </button>
-          <button type="button" class="dmx-ch" role="tab" data-ch="5" aria-selected="false" tabindex="-1" title="pwn-broker (Python)">
-            <span class="dmx-led" aria-hidden="true"></span>
-            <span class="dmx-well" style="--ch-wash:linear-gradient(180deg,#241008,#bd4612 58%,#ff9254)" aria-hidden="true"><span class="dmx-cap"></span></span>
-            <span class="dmx-num">06</span>
-            <span class="dmx-slug">pwn-broker</span>
-          </button>
-          <button type="button" class="dmx-ch" role="tab" data-ch="6" aria-selected="false" tabindex="-1" title="open-file (TypeScript)">
-            <span class="dmx-led" aria-hidden="true"></span>
-            <span class="dmx-well" style="--ch-wash:linear-gradient(180deg,#1d2d3a,#74b8e8 54%,#f5f7f9)" aria-hidden="true"><span class="dmx-cap"></span></span>
-            <span class="dmx-num">07</span>
-            <span class="dmx-slug">open-file</span>
-          </button>
+        <div class="dmx-bank-wrap">
+          <div class="dmx-bank" id="dmx-bank" role="tablist" aria-label="Select Real-Fruit-Snacks tool channel">
+            <button type="button" class="dmx-ch" id="ch-tab-0" role="tab" data-ch="0" aria-selected="true" tabindex="0" style="--ch-bar-dark:#316896;--ch-bar-light:#164669;--rest:0.18" title="screen-mark (Rust)">
+              <span class="dmx-num">01</span><span class="dmx-slug">screen-mark</span>
+              <span class="dmx-track" aria-hidden="true"><span class="dmx-fill-clip"><span class="dmx-fill"></span></span><span class="dmx-cap"></span></span>
+            </button>
+            <button type="button" class="dmx-ch" id="ch-tab-1" role="tab" data-ch="1" aria-selected="false" tabindex="-1" style="--ch-bar-dark:#3a77aa;--ch-bar-light:#194f78;--rest:0.20" title="port-sync (Rust)">
+              <span class="dmx-num">02</span><span class="dmx-slug">port-sync</span>
+              <span class="dmx-track" aria-hidden="true"><span class="dmx-fill-clip"><span class="dmx-fill"></span></span><span class="dmx-cap"></span></span>
+            </button>
+            <button type="button" class="dmx-ch" id="ch-tab-2" role="tab" data-ch="2" aria-selected="false" tabindex="-1" style="--ch-bar-dark:#4586bd;--ch-bar-light:#1d5886;--rest:0.22" title="carify (sh / PowerShell)">
+              <span class="dmx-num">03</span><span class="dmx-slug">carify</span>
+              <span class="dmx-track" aria-hidden="true"><span class="dmx-fill-clip"><span class="dmx-fill"></span></span><span class="dmx-cap"></span></span>
+            </button>
+            <button type="button" class="dmx-ch" id="ch-tab-3" role="tab" data-ch="3" aria-selected="false" tabindex="-1" style="--ch-bar-dark:#5396ce;--ch-bar-light:#216194;--rest:0.24" title="certapi (C#)">
+              <span class="dmx-num">04</span><span class="dmx-slug">certapi</span>
+              <span class="dmx-track" aria-hidden="true"><span class="dmx-fill-clip"><span class="dmx-fill"></span></span><span class="dmx-cap"></span></span>
+            </button>
+            <button type="button" class="dmx-ch" id="ch-tab-4" role="tab" data-ch="4" aria-selected="false" tabindex="-1" style="--ch-bar-dark:#62a5db;--ch-bar-light:#266a9e;--rest:0.27" title="identity-gen (HTML)">
+              <span class="dmx-num">05</span><span class="dmx-slug">identity-gen</span>
+              <span class="dmx-track" aria-hidden="true"><span class="dmx-fill-clip"><span class="dmx-fill"></span></span><span class="dmx-cap"></span></span>
+            </button>
+            <button type="button" class="dmx-ch" id="ch-tab-5" role="tab" data-ch="5" aria-selected="false" tabindex="-1" style="--ch-bar-dark:#72b4e6;--ch-bar-light:#2c72a6;--rest:0.29" title="amazon-order-sync (Rust)">
+              <span class="dmx-num">06</span><span class="dmx-slug">amazon-order-sync</span>
+              <span class="dmx-track" aria-hidden="true"><span class="dmx-fill-clip"><span class="dmx-fill"></span></span><span class="dmx-cap"></span></span>
+            </button>
+            <button type="button" class="dmx-ch" id="ch-tab-6" role="tab" data-ch="6" aria-selected="false" tabindex="-1" style="--ch-bar-dark:#82bfe8;--ch-bar-light:#3278a8;--rest:0.31" title="powershell-toolbox (PowerShell)">
+              <span class="dmx-num">07</span><span class="dmx-slug">powershell-toolbox</span>
+              <span class="dmx-track" aria-hidden="true"><span class="dmx-fill-clip"><span class="dmx-fill"></span></span><span class="dmx-cap"></span></span>
+            </button>
+            <button type="button" class="dmx-ch" id="ch-tab-7" role="tab" data-ch="7" aria-selected="false" tabindex="-1" style="--ch-bar-dark:#8eaac0;--ch-bar-light:#496c87;--rest:0.33" title="pwn-broker (Python)">
+              <span class="dmx-num">08</span><span class="dmx-slug">pwn-broker</span>
+              <span class="dmx-track" aria-hidden="true"><span class="dmx-fill-clip"><span class="dmx-fill"></span></span><span class="dmx-cap"></span></span>
+            </button>
+            <button type="button" class="dmx-ch" id="ch-tab-8" role="tab" data-ch="8" aria-selected="false" tabindex="-1" style="--ch-bar-dark:#c47448;--ch-bar-light:#8b5232;--rest:0.35" title="pwn-shop (Python)">
+              <span class="dmx-num">09</span><span class="dmx-slug">pwn-shop</span>
+              <span class="dmx-track" aria-hidden="true"><span class="dmx-fill-clip"><span class="dmx-fill"></span></span><span class="dmx-cap"></span></span>
+            </button>
+            <button type="button" class="dmx-ch" id="ch-tab-9" role="tab" data-ch="9" aria-selected="false" tabindex="-1" style="--ch-bar-dark:#df6b30;--ch-bar-light:#b24b18;--rest:0.37" title="pwn-playbooks (Markdown)">
+              <span class="dmx-num">10</span><span class="dmx-slug">pwn-playbooks</span>
+              <span class="dmx-track" aria-hidden="true"><span class="dmx-fill-clip"><span class="dmx-fill"></span></span><span class="dmx-cap"></span></span>
+            </button>
+            <button type="button" class="dmx-ch" id="ch-tab-10" role="tab" data-ch="10" aria-selected="false" tabindex="-1" style="--ch-bar-dark:#eb6c2b;--ch-bar-light:#c44d14;--rest:0.39" title="pwn-report (Python)">
+              <span class="dmx-num">11</span><span class="dmx-slug">pwn-report</span>
+              <span class="dmx-track" aria-hidden="true"><span class="dmx-fill-clip"><span class="dmx-fill"></span></span><span class="dmx-cap"></span></span>
+            </button>
+            <button type="button" class="dmx-ch" id="ch-tab-11" role="tab" data-ch="11" aria-selected="false" tabindex="-1" style="--ch-bar-dark:#f06e2b;--ch-bar-light:#d15316;--rest:0.41" title="open-file (TypeScript)">
+              <span class="dmx-num">12</span><span class="dmx-slug">open-file</span>
+              <span class="dmx-track" aria-hidden="true"><span class="dmx-fill-clip"><span class="dmx-fill"></span></span><span class="dmx-cap"></span></span>
+            </button>
+            <button type="button" class="dmx-ch" id="ch-tab-12" role="tab" data-ch="12" aria-selected="false" tabindex="-1" style="--ch-bar-dark:#f47e38;--ch-bar-light:#d65a1a;--rest:0.44" title="one-billion-pixels (TypeScript)">
+              <span class="dmx-num">13</span><span class="dmx-slug">one-billion-pixels</span>
+              <span class="dmx-track" aria-hidden="true"><span class="dmx-fill-clip"><span class="dmx-fill"></span></span><span class="dmx-cap"></span></span>
+            </button>
+            <button type="button" class="dmx-ch" id="ch-tab-13" role="tab" data-ch="13" aria-selected="false" tabindex="-1" style="--ch-bar-dark:#f89048;--ch-bar-light:#cc601c;--rest:0.46" title="hash-bait (Rust)">
+              <span class="dmx-num">14</span><span class="dmx-slug">hash-bait</span>
+              <span class="dmx-track" aria-hidden="true"><span class="dmx-fill-clip"><span class="dmx-fill"></span></span><span class="dmx-cap"></span></span>
+            </button>
+            <button type="button" class="dmx-ch" id="ch-tab-14" role="tab" data-ch="14" aria-selected="false" tabindex="-1" style="--ch-bar-dark:#fca45c;--ch-bar-light:#be641e;--rest:0.48" title="cred-spray (Python)">
+              <span class="dmx-num">15</span><span class="dmx-slug">cred-spray</span>
+              <span class="dmx-track" aria-hidden="true"><span class="dmx-fill-clip"><span class="dmx-fill"></span></span><span class="dmx-cap"></span></span>
+            </button>
+            <button type="button" class="dmx-ch" id="ch-tab-15" role="tab" data-ch="15" aria-selected="false" tabindex="-1" style="--ch-bar-dark:#ffb872;--ch-bar-light:#b06620;--rest:0.50" title="ad-sweep (Rust)">
+              <span class="dmx-num">16</span><span class="dmx-slug">ad-sweep</span>
+              <span class="dmx-track" aria-hidden="true"><span class="dmx-fill-clip"><span class="dmx-fill"></span></span><span class="dmx-cap"></span></span>
+            </button>
+            <button type="button" class="dmx-ch" id="ch-tab-16" role="tab" data-ch="16" aria-selected="false" tabindex="-1" style="--ch-bar-dark:#ffcc8c;--ch-bar-light:#a16622;--rest:0.52" title="shell-tunnel (Go)">
+              <span class="dmx-num">17</span><span class="dmx-slug">shell-tunnel</span>
+              <span class="dmx-track" aria-hidden="true"><span class="dmx-fill-clip"><span class="dmx-fill"></span></span><span class="dmx-cap"></span></span>
+            </button>
+            <div class="dmx-summary" aria-hidden="true">
+              <span class="dmx-summary-lx"><span class="night">LX 263</span><span class="day">LX 512</span></span>
+              <span class="dmx-summary-meta">17 ACTIVE · LOCAL</span>
+            </div>
+          </div>
         </div>
       </section>
       <p class="more"><a href="https://real-fruit-snacks.github.io/">Full 17-tool catalog &amp; proof desk</a><span class="more-sep" aria-hidden="true">·</span><code>real-fruit-snacks.github.io</code></p>
@@ -1204,6 +1330,7 @@ footer {
 <footer>
   <span class="org"><img src="icon.svg" alt="" width="24" height="24">REAL-FRUIT-SNACKS</span>
   <span class="foot">
+    <a href="https://real-fruit-snacks.github.io/rfs-themes/">Themes</a>
     <a href="https://github.com/Real-Fruit-Snacks/rfs-brand/blob/main/BRAND.md">Brand guide</a>
     <button class="theme" type="button" hidden aria-label="Toggle between Beacon Horizon dark theme and Alabaster Day light theme">
       <span class="sw" aria-hidden="true"></span>
@@ -1260,10 +1387,11 @@ footer {
     root.style.setProperty("--vt-x", `${x.toFixed(1)}px`);
     root.style.setProperty("--vt-y", `${y.toFixed(1)}px`);
     root.style.setProperty("--vt-r", `${r.toFixed(1)}px`);
-    document.startViewTransition(apply);
+    const vt = document.startViewTransition(apply);
+    Promise.allSettled([vt.ready, vt.updateCallbackDone, vt.finished]);
   });
 
-  // Interactive 7-channel Cyclorama Signal Patch Bay + DMX Fader Bank
+  // Interactive 17-channel Cyclorama Signal Patch Bay + 3x6 DMX Cue Matrix
   const TOOLS = [
     {
       repo: "screen-mark",
@@ -1279,7 +1407,7 @@ footer {
       lang: "[rust]",
       os: "Windows",
       desc: "Keeps qBittorrent's port synced to Proton VPN.",
-      inVal: "Proton VPN forwarded port 51037",
+      inVal: "Port pair 51037->51037",
       proc: "every 15 s",
       outVal: "listening port updated: 48213 -> 51037",
     },
@@ -1297,49 +1425,142 @@ footer {
       lang: "[c#]",
       os: "Windows",
       desc: "mTLS API client for the Windows certificate store.",
-      inVal: "client cert in CurrentUser\\My",
+      inVal: "a client certificate in CurrentUser\\My",
       proc: "mTLS handshake",
-      outVal: "200 OK · key never left the store",
+      outVal: "200 OK; the key never left the store",
     },
     {
       repo: "identity-gen",
       lang: "[html]",
       os: "Offline Browser",
       desc: "Offline generator for throwaway signup identities.",
-      inVal: "signup form requesting extra fields",
+      inVal: "a signup form that wants too much",
       proc: "zero network",
-      outVal: "stand-in name, handle & passphrase",
+      outVal: "a stand-in: name, handle, passphrase",
+    },
+    {
+      repo: "amazon-order-sync",
+      lang: "[rust]",
+      os: "Win · Linux · macOS",
+      desc: "Syncs your Amazon orders into local Markdown notes.",
+      inVal: "Amazon's order history",
+      proc: "local sync",
+      outVal: "one Order-<id>.md per order",
+    },
+    {
+      repo: "powershell-toolbox",
+      lang: "[ps1]",
+      os: "Windows",
+      desc: "A grab-bag of my PowerShell scripts, each one standalone.",
+      inVal: "every repo your gh login sees",
+      proc: "standalone ps1",
+      outVal: "one at a time: keep, archive or delete",
     },
     {
       repo: "pwn-broker",
       lang: "[python]",
       os: "Kali Linux",
       desc: "Keeps a box's targets, notes, creds, and tools in order.",
-      inVal: "$ pwn-broker new htb-forest",
+      inVal: "pwn-broker new",
       proc: "workspace cli",
-      outVal: "~/boxes/htb-forest initialized",
+      outVal: "2026-11-16_htb_forest.finished.tar.gz",
+    },
+    {
+      repo: "pwn-shop",
+      lang: "[python]",
+      os: "Kali Linux",
+      desc: "Tool packages for pwn-broker, built from upstream releases.",
+      inVal: "an upstream release, pinned by SHA-256",
+      proc: "sha256 verified",
+      outVal: "kerbrute-1.0.3-1.zip",
+    },
+    {
+      repo: "pwn-playbooks",
+      lang: "[md]",
+      os: "Kali Linux",
+      desc: "Playbooks for pwn-broker: read into the note, fill in, run.",
+      inVal: ":Pb smb in the note window",
+      proc: "note template",
+      outVal: "Playbook: SMB enumeration, to fill in",
+    },
+    {
+      repo: "pwn-report",
+      lang: "[python]",
+      os: "Kali Linux",
+      desc: "Private, evidence-linked reports from pwn-broker archives.",
+      inVal: "2026-11-16_htb_forest.finished.tar.gz",
+      proc: "offline render",
+      outVal: "report.md, every file with its SHA-256",
     },
     {
       repo: "open-file",
       lang: "[ts]",
       os: "Offline Browser",
       desc: "Learn and play chess in your browser, offline.",
-      inVal: "a blunder from your own game",
-      proc: "local engine",
-      outVal: "interactive tactical puzzle",
+      inVal: "a blunder in one of your games",
+      proc: "local stockfish",
+      outVal: "a puzzle made from it",
+    },
+    {
+      repo: "one-billion-pixels",
+      lang: "[ts]",
+      os: "Offline Browser",
+      desc: "Excavate one billion pixels in your browser, offline.",
+      inVal: "a single empty origin square",
+      proc: "canvas engine",
+      outVal: "one billion pixels carved offline",
+    },
+    {
+      repo: "hash-bait",
+      lang: "[rust]",
+      os: "Windows · Linux",
+      desc: "Drop poisoned shortcuts on SMB shares to coerce NTLM hashes.",
+      inVal: "//dc1/public + responder IP",
+      proc: "drop · clean",
+      outVal: "poisoned .url/.scf/.xml, NetNTLMv2",
+    },
+    {
+      repo: "cred-spray",
+      lang: "[python]",
+      os: "Windows · Linux",
+      desc: "Bounded, protocol-aware credential spraying.",
+      inVal: "scan.xml + credentials.txt",
+      proc: "lockout guard",
+      outVal: "results.json, 7 explicit statuses",
+    },
+    {
+      repo: "ad-sweep",
+      lang: "[rust]",
+      os: "Windows · Linux",
+      desc: "Runs isolated Active Directory enumeration with NetExec.",
+      inVal: "10.0.0.1-2 + credentials.txt",
+      proc: "isolated nxc",
+      outVal: "ordered results.json per target",
+    },
+    {
+      repo: "shell-tunnel",
+      lang: "[go]",
+      os: "Windows · Linux",
+      desc: "Static SSH server for bind and reverse shells, PTY and SFTP.",
+      inVal: "./build.sh reverse 10.10.14.5:4444",
+      proc: "static go ssh",
+      outVal: "PTY shell, SFTP & -L/-R/-D via ssh",
     },
   ];
 
   const deck = document.getElementById("rfs-deck");
   if (deck) {
+    const bank = document.getElementById("dmx-bank");
     const chBtns = Array.from(deck.querySelectorAll("[data-ch]"));
+    const elPanel = document.getElementById("deck-panel");
     const elMeta = document.getElementById("deck-ch-meta");
     const elName = document.getElementById("deck-name");
     const elLang = document.getElementById("deck-lang");
     const elOs = document.getElementById("deck-os");
     const elDesc = document.getElementById("deck-desc");
     const elIn = document.getElementById("deck-in");
-    const elProc = document.getElementById("deck-proc");
+    const elProcRepo = document.getElementById("deck-proc-repo");
+    const elProcNote = document.getElementById("deck-proc-note");
     const elOut = document.getElementById("deck-out");
     const elBeam = document.getElementById("deck-beam");
     const elDocs = document.getElementById("deck-docs-link");
@@ -1370,12 +1591,14 @@ footer {
       elOs.textContent = t.os;
       elDesc.textContent = t.desc;
       elIn.textContent = t.inVal;
-      elProc.innerHTML = `[${t.repo}] <span>${t.proc}</span>`;
+      if (elProcRepo) elProcRepo.textContent = `[${t.repo}]`;
+      if (elProcNote) elProcNote.textContent = t.proc;
       elOut.textContent = t.outVal;
       elDocs.href = `https://real-fruit-snacks.github.io/${t.repo}/`;
       elRepo.href = `https://github.com/Real-Fruit-Snacks/${t.repo}`;
       elCopy.removeAttribute("data-copied");
       elCopy.textContent = "Copy git clone";
+      if (elPanel && chBtns[active]?.id) elPanel.setAttribute("aria-labelledby", chBtns[active].id);
 
       chBtns.forEach((b, i) => {
         const hit = i === active;
@@ -1391,13 +1614,83 @@ footer {
       restartDwell();
     };
 
+    // Edge-based live-geometry 2D spatial navigation (preserves native scroll at boundaries)
+    const findSpatialNeighbor = (current, dir) => {
+      const tol = 2;
+      const cur = current.getBoundingClientRect();
+      const curCx = (cur.left + cur.right) / 2;
+      const curCy = (cur.top + cur.bottom) / 2;
+      const aligned = [];
+      const fallback = [];
+
+      for (const cand of chBtns) {
+        if (cand === current) continue;
+        if (typeof cand.checkVisibility === "function" && !cand.checkVisibility()) continue;
+        const r = cand.getBoundingClientRect();
+        if (r.width === 0 && r.height === 0) continue;
+
+        let gap = -1;
+        let overlap = false;
+        let perp = 0;
+
+        if (dir === "ArrowRight" && r.left >= cur.right - tol) {
+          gap = Math.max(0, r.left - cur.right);
+          overlap = r.bottom > cur.top + tol && r.top < cur.bottom - tol;
+          perp = Math.abs((r.top + r.bottom) / 2 - curCy);
+        } else if (dir === "ArrowLeft" && r.right <= cur.left + tol) {
+          gap = Math.max(0, cur.left - r.right);
+          overlap = r.bottom > cur.top + tol && r.top < cur.bottom - tol;
+          perp = Math.abs((r.top + r.bottom) / 2 - curCy);
+        } else if (dir === "ArrowDown" && r.top >= cur.bottom - tol) {
+          gap = Math.max(0, r.top - cur.bottom);
+          overlap = r.right > cur.left + tol && r.left < cur.right - tol;
+          perp = Math.abs((r.left + r.right) / 2 - curCx);
+        } else if (dir === "ArrowUp" && r.bottom <= cur.top + tol) {
+          gap = Math.max(0, cur.top - r.bottom);
+          overlap = r.right > cur.left + tol && r.left < cur.right - tol;
+          perp = Math.abs((r.left + r.right) / 2 - curCx);
+        }
+
+        if (gap >= 0) {
+          (overlap ? aligned : fallback).push({ el: cand, gap, perp, score: gap + 2.5 * perp });
+        }
+      }
+
+      if (aligned.length) {
+        aligned.sort((a, b) => a.gap - b.gap || a.perp - b.perp);
+        return aligned[0].el;
+      }
+      if (fallback.length) {
+        fallback.sort((a, b) => a.score - b.score);
+        return fallback[0].el;
+      }
+      return null;
+    };
+
     chBtns.forEach((b) => {
       b.addEventListener("click", () => selectChannel(Number(b.dataset.ch), true));
-      b.addEventListener("keydown", (e) => {
-        if (e.key === "ArrowRight") { e.preventDefault(); selectChannel(active + 1, true); chBtns[active].focus(); }
-        else if (e.key === "ArrowLeft") { e.preventDefault(); selectChannel(active - 1, true); chBtns[active].focus(); }
-      });
     });
+
+    if (bank) {
+      bank.addEventListener("keydown", (e) => {
+        if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
+        const target = e.composedPath()[0];
+        if (!chBtns.includes(target)) return;
+
+        let nextEl = null;
+        if (e.key === "Home") nextEl = chBtns[0];
+        else if (e.key === "End") nextEl = chBtns[chBtns.length - 1];
+        else if (e.key === "ArrowLeft" || e.key === "ArrowRight" || e.key === "ArrowUp" || e.key === "ArrowDown") {
+          nextEl = findSpatialNeighbor(target, e.key);
+        }
+        if (!nextEl) return;
+
+        e.preventDefault();
+        selectChannel(Number(nextEl.dataset.ch), true);
+        nextEl.focus();
+        nextEl.scrollIntoView({ block: "nearest", inline: "nearest" });
+      });
+    }
 
     if (btnPrev) btnPrev.addEventListener("click", () => selectChannel(active - 1, true));
     if (btnNext) btnNext.addEventListener("click", () => selectChannel(active + 1, true));
