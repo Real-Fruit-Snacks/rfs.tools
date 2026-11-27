@@ -973,6 +973,7 @@ h1 {
 
 .dmx-summary-lx {
   color: var(--rfs-steel-ink);
+  white-space: nowrap;
 }
 
 .dmx-summary-lx .day { display: none; }
@@ -985,7 +986,7 @@ h1 {
 }
 
 @container (max-width: 28rem) {
-  .dmx-track { display: none; }
+  .dmx-track, .dmx-summary-scope { display: none; }
   .dmx-ch { min-block-size: 2.35rem; padding-inline: 0.52rem 0.45rem; }
   .dmx-summary { min-block-size: 2.35rem; }
 }
@@ -1317,7 +1318,7 @@ footer {
             </button>
             <div class="dmx-summary" aria-hidden="true">
               <span class="dmx-summary-lx"><span class="night">LX 263</span><span class="day">LX 512</span></span>
-              <span class="dmx-summary-meta">17 ACTIVE · LOCAL</span>
+              <span class="dmx-summary-meta">17 ACTIVE<span class="dmx-summary-scope"> · LOCAL</span></span>
             </div>
           </div>
         </div>
