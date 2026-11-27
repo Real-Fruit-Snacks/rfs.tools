@@ -1064,6 +1064,10 @@ footer {
   border-radius: 5px;
 }
 
+.org .mark-light { display: none; }
+:root:has(> head > meta[name="color-scheme"][content="light"]) .org .mark-dark { display: none; }
+:root:has(> head > meta[name="color-scheme"][content="light"]) .org .mark-light { display: block; }
+
 .foot {
   margin-inline-start: auto;
   display: flex;
@@ -1329,7 +1333,7 @@ footer {
 </main>
 
 <footer>
-  <span class="org"><img src="icon.svg" alt="" width="24" height="24">REAL-FRUIT-SNACKS</span>
+  <span class="org"><img class="mark-dark" src="icon.svg" alt="" width="24" height="24"><img class="mark-light" src="assets/rfs-mark-light.svg" alt="" width="24" height="24">REAL-FRUIT-SNACKS</span>
   <span class="foot">
     <a href="https://real-fruit-snacks.github.io/rfs-themes/">Themes</a>
     <a href="https://real-fruit-snacks.github.io/rfs-brand/">Brand guide</a>
