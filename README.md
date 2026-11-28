@@ -1,6 +1,8 @@
 # rfs.tools
 
-The single-page front door at **[https://rfs.tools/](https://rfs.tools/)** in the **Cyclorama Dawn — Steel & Beacon Orange** identity. No build step, no frameworks, zero third-party requests.
+Single-page Cyclorama Dawn front door at rfs.tools
+
+Live at **[https://rfs.tools/](https://rfs.tools/)** in the **Cyclorama Dawn — Steel & Beacon Orange** identity. No build step, no frameworks, zero third-party requests.
 
 | File | Purpose |
 |---|---|
