@@ -6,7 +6,7 @@ Live at **[https://rfs.tools/](https://rfs.tools/)** in the **Cyclorama Dawn —
 
 | File | Purpose |
 |---|---|
-| `index.html` | Self-contained front door with Cyclorama Dawn tokens, `RFS` stencil wordmark, and interactive 17-channel Signal Patch Bay + 3×6 DMX Cue Matrix |
+| `index.html` | Self-contained front door with Cyclorama Dawn tokens, `RFS` stencil wordmark, and interactive 16-channel Signal Patch Bay + 3×6 DMX Cue Matrix |
 | `fonts/` | Self-hosted SIL OFL variable WOFF2 files (`Big Shoulders Stencil`, `Albert Sans`, `Azeret Mono`) |
 | `icon.svg`, `favicon.ico`, `apple-touch-icon.png`, `icon-*.png`, `manifest.webmanifest` | Copied directly from `rfs-brand/brand/web/` |
 | `assets/og.png` | `1280×640` org social preview copied from `rfs-brand/brand/social/rfs-social-org-dark-1280x640.png` |

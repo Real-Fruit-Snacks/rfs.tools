@@ -27,7 +27,7 @@ try {
 <meta property="og:image" content="https://rfs.tools/assets/og.png">
 <meta property="og:image:width" content="1280">
 <meta property="og:image:height" content="640">
-<meta property="og:image:alt" content="RFS: Built local-first. Seventeen active public repositories on GitHub.">
+<meta property="og:image:alt" content="RFS: Built local-first. Sixteen active public repositories on GitHub.">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preload" href="fonts/big-shoulders-stencil-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/albert-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
@@ -384,7 +384,7 @@ h1 {
 .cta:active,
 .cta-alt:active { transform: none; }
 
-/* ---- Interactive Cyclorama Signal Patch Bay + 17-Channel DMX Cue Matrix ---- */
+/* ---- Interactive Cyclorama Signal Patch Bay + 16-Channel DMX Cue Matrix ---- */
 .shell { width: 100%; }
 
 .deck {
@@ -768,7 +768,7 @@ h1 {
   color: var(--rfs-mint);
 }
 
-/* 17-Channel Interactive 3x6 Horizontal DMX Cue Matrix */
+/* 16-Channel Interactive 3x6 Horizontal DMX Cue Matrix */
 .dmx-bank-wrap {
   container-type: inline-size;
   background: var(--rfs-surface);
@@ -945,6 +945,7 @@ h1 {
 }
 
 .dmx-summary {
+  grid-column: 1 / -1;
   position: relative;
   display: flex;
   align-items: center;
@@ -960,6 +961,12 @@ h1 {
   letter-spacing: 0.05em;
   text-transform: uppercase;
   overflow: hidden;
+}
+
+@container (min-width: 37.5rem) {
+  .dmx-summary {
+    grid-column: span 2;
+  }
 }
 
 .dmx-summary::before {
@@ -1185,18 +1192,18 @@ footer {
           <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
           github.com/Real-Fruit-Snacks
         </a>
-        <a class="cta-alt" href="https://real-fruit-snacks.github.io/">Explore all 17 tools</a>
+        <a class="cta-alt" href="https://real-fruit-snacks.github.io/">Explore all 16 tools</a>
       </div>
     </div>
 
     <div class="shell">
-      <!-- Interactive 17-channel Cyclorama Signal Patch Bay + 3x6 DMX Cue Matrix -->
+      <!-- Interactive 16-channel Cyclorama Signal Patch Bay + 3x6 DMX Cue Matrix -->
       <section class="deck" id="rfs-deck" aria-label="Interactive Real-Fruit-Snacks tool patch bay">
         <div class="deck-beam" aria-hidden="true"></div>
         <div class="deck-head">
           <div class="deck-head-left">
             <span class="bar-tok">[patch bay]</span>
-            <span class="bar-meta"><span id="deck-ch-meta">CH 01 / 17</span><span class="bar-meta-scope"> · LOCAL</span></span>
+            <span class="bar-meta"><span id="deck-ch-meta">CH 01 / 16</span><span class="bar-meta-scope"> · LOCAL</span></span>
           </div>
           <div class="deck-ctrl">
             <button type="button" class="deck-btn" id="deck-prev" aria-label="Previous tool channel">&lt;</button>
@@ -1300,34 +1307,30 @@ footer {
               <span class="dmx-num">12</span><span class="dmx-slug">open-file</span>
               <span class="dmx-track" aria-hidden="true"><span class="dmx-fill-clip"><span class="dmx-fill"></span></span><span class="dmx-cap"></span></span>
             </button>
-            <button type="button" class="dmx-ch" id="ch-tab-12" role="tab" data-ch="12" aria-selected="false" tabindex="-1" style="--ch-bar-dark:#f47e38;--ch-bar-light:#d65a1a;--rest:0.44" title="one-billion-pixels (TypeScript)">
-              <span class="dmx-num">13</span><span class="dmx-slug">one-billion-pixels</span>
+            <button type="button" class="dmx-ch" id="ch-tab-12" role="tab" data-ch="12" aria-selected="false" tabindex="-1" style="--ch-bar-dark:#f89048;--ch-bar-light:#cc601c;--rest:0.45" title="hash-bait (Rust)">
+              <span class="dmx-num">13</span><span class="dmx-slug">hash-bait</span>
               <span class="dmx-track" aria-hidden="true"><span class="dmx-fill-clip"><span class="dmx-fill"></span></span><span class="dmx-cap"></span></span>
             </button>
-            <button type="button" class="dmx-ch" id="ch-tab-13" role="tab" data-ch="13" aria-selected="false" tabindex="-1" style="--ch-bar-dark:#f89048;--ch-bar-light:#cc601c;--rest:0.46" title="hash-bait (Rust)">
-              <span class="dmx-num">14</span><span class="dmx-slug">hash-bait</span>
+            <button type="button" class="dmx-ch" id="ch-tab-13" role="tab" data-ch="13" aria-selected="false" tabindex="-1" style="--ch-bar-dark:#fca45c;--ch-bar-light:#be641e;--rest:0.47" title="cred-spray (Python)">
+              <span class="dmx-num">14</span><span class="dmx-slug">cred-spray</span>
               <span class="dmx-track" aria-hidden="true"><span class="dmx-fill-clip"><span class="dmx-fill"></span></span><span class="dmx-cap"></span></span>
             </button>
-            <button type="button" class="dmx-ch" id="ch-tab-14" role="tab" data-ch="14" aria-selected="false" tabindex="-1" style="--ch-bar-dark:#fca45c;--ch-bar-light:#be641e;--rest:0.48" title="cred-spray (Python)">
-              <span class="dmx-num">15</span><span class="dmx-slug">cred-spray</span>
+            <button type="button" class="dmx-ch" id="ch-tab-14" role="tab" data-ch="14" aria-selected="false" tabindex="-1" style="--ch-bar-dark:#ffb872;--ch-bar-light:#b06620;--rest:0.50" title="ad-sweep (Rust)">
+              <span class="dmx-num">15</span><span class="dmx-slug">ad-sweep</span>
               <span class="dmx-track" aria-hidden="true"><span class="dmx-fill-clip"><span class="dmx-fill"></span></span><span class="dmx-cap"></span></span>
             </button>
-            <button type="button" class="dmx-ch" id="ch-tab-15" role="tab" data-ch="15" aria-selected="false" tabindex="-1" style="--ch-bar-dark:#ffb872;--ch-bar-light:#b06620;--rest:0.50" title="ad-sweep (Rust)">
-              <span class="dmx-num">16</span><span class="dmx-slug">ad-sweep</span>
-              <span class="dmx-track" aria-hidden="true"><span class="dmx-fill-clip"><span class="dmx-fill"></span></span><span class="dmx-cap"></span></span>
-            </button>
-            <button type="button" class="dmx-ch" id="ch-tab-16" role="tab" data-ch="16" aria-selected="false" tabindex="-1" style="--ch-bar-dark:#ffcc8c;--ch-bar-light:#a16622;--rest:0.52" title="shell-tunnel (Go)">
-              <span class="dmx-num">17</span><span class="dmx-slug">shell-tunnel</span>
+            <button type="button" class="dmx-ch" id="ch-tab-15" role="tab" data-ch="15" aria-selected="false" tabindex="-1" style="--ch-bar-dark:#ffcc8c;--ch-bar-light:#a16622;--rest:0.52" title="shell-tunnel (Go)">
+              <span class="dmx-num">16</span><span class="dmx-slug">shell-tunnel</span>
               <span class="dmx-track" aria-hidden="true"><span class="dmx-fill-clip"><span class="dmx-fill"></span></span><span class="dmx-cap"></span></span>
             </button>
             <div class="dmx-summary" aria-hidden="true">
               <span class="dmx-summary-lx"><span class="night">LX 263</span><span class="day">LX 512</span></span>
-              <span class="dmx-summary-meta">17 ACTIVE<span class="dmx-summary-scope"> · LOCAL</span></span>
+              <span class="dmx-summary-meta">16 ACTIVE<span class="dmx-summary-scope"> · LOCAL</span></span>
             </div>
           </div>
         </div>
       </section>
-      <p class="more"><a href="https://real-fruit-snacks.github.io/">Full 17-tool catalog &amp; proof desk</a><span class="more-sep" aria-hidden="true">·</span><code>real-fruit-snacks.github.io</code></p>
+      <p class="more"><a href="https://real-fruit-snacks.github.io/">Full 16-tool catalog &amp; proof desk</a><span class="more-sep" aria-hidden="true">·</span><code>real-fruit-snacks.github.io</code></p>
     </div>
   </div>
 </main>
@@ -1396,7 +1399,7 @@ footer {
     Promise.allSettled([vt.ready, vt.updateCallbackDone, vt.finished]);
   });
 
-  // Interactive 17-channel Cyclorama Signal Patch Bay + 3x6 DMX Cue Matrix
+  // Interactive 16-channel Cyclorama Signal Patch Bay + 3x6 DMX Cue Matrix
   const TOOLS = [
     {
       repo: "screen-mark",
@@ -1505,15 +1508,6 @@ footer {
       inVal: "a blunder in one of your games",
       proc: "local stockfish",
       outVal: "a puzzle made from it",
-    },
-    {
-      repo: "one-billion-pixels",
-      lang: "[ts]",
-      os: "Offline Browser",
-      desc: "Excavate one billion pixels in your browser, offline.",
-      inVal: "a single empty origin square",
-      proc: "canvas engine",
-      outVal: "one billion pixels carved offline",
     },
     {
       repo: "hash-bait",
